@@ -41,7 +41,15 @@ export const visitorApi = {
   /** 페이지 로드 시 호출. 오늘 방문 수를 반환 */
   async recordVisit() {
     if (API_BASE) {
-      try { return await apiFetch('/api/visitors/visit', { method: 'POST' }) } catch {}
+      try {
+        // 1. 방문 기록 (void)
+        await fetch(`${API_BASE}/api/admin/visit`, { method: 'POST' })
+        // 2. 오늘 방문자 수 조회
+        const res = await apiFetch('/api/admin/visit/count')
+        return { today: res.data?.count ?? 0 }
+      } catch (err) {
+        console.error('Visitor record error:', err)
+      }
     }
     // --- localStorage fallback ---
     const today   = new Date().toISOString().slice(0, 10)
@@ -64,7 +72,12 @@ export const visitorApi = {
 
   async getToday() {
     if (API_BASE) {
-      try { return await apiFetch('/api/visitors/today') } catch {}
+      try {
+        const res = await apiFetch('/api/admin/visit/count')
+        return { today: res.data?.count ?? 0 }
+      } catch (err) {
+        console.error('Visitor count error:', err)
+      }
     }
     const today  = new Date().toISOString().slice(0, 10)
     const stored = JSON.parse(localStorage.getItem(KEY_VISITOR) || '{}')
