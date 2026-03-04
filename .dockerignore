@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+.gitignore
+.dockerignore
+README.md
+CLAUDE.md
+package-lock.json
+npm-debug.log

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:github-contributions-api.jogruber.de)",
+      "WebFetch(domain:back-stead.tistory.com)",
+      "WebFetch(domain:api.allorigins.win)"
+    ]
+  }
+}

@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 transition-colors duration-300;
+  }
+
+  .dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  * {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl font-bold text-center mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-gray-500 dark:text-gray-400 text-center mb-12 text-lg;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium
+           bg-primary-100 text-primary-700
+           dark:bg-primary-900/30 dark:text-primary-300;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold
+           bg-primary-600 text-white hover:bg-primary-700
+           dark:bg-primary-500 dark:hover:bg-primary-600
+           transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold
+           border-2 border-primary-600 text-primary-600
+           hover:bg-primary-600 hover:text-white
+           dark:border-primary-400 dark:text-primary-400
+           dark:hover:bg-primary-400 dark:hover:text-gray-900
+           transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-md
+           border border-gray-100 dark:border-gray-700
+           hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+  }
+}
+
+/* Hero: dot grid background — theme aware */
+.hero-dot-bg {
+  background-color: #f5f7ff;
+  background-image: radial-gradient(rgba(99, 102, 241, 0.18) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  transition: background-color 0.3s;
+}
+.dark .hero-dot-bg {
+  background-color: #080d1a;
+  background-image: radial-gradient(rgba(99, 102, 241, 0.28) 1.5px, transparent 1.5px);
+}
+
+/* About section dot grid — hero보다 살짝 밝은 배경으로 구분 */
+.about-dot-bg {
+  background-color: #eef2ff;
+  background-image: radial-gradient(rgba(99, 102, 241, 0.14) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  transition: background-color 0.3s;
+}
+.dark .about-dot-bg {
+  background-color: #0d1117;
+  background-image: radial-gradient(rgba(99, 102, 241, 0.2) 1.5px, transparent 1.5px);
+}
+
+/* Vignette — dark mode only */
+.hero-vignette {
+  display: none;
+}
+.dark .hero-vignette {
+  display: block;
+  background: radial-gradient(
+    ellipse 100% 70% at 50% 50%,
+    transparent 25%,
+    rgba(8, 13, 26, 0.75) 100%
+  );
+}
+
+/* GitHub 잔디 캘린더 — SVG를 컨테이너 폭 100%로 강제 확장
+   react-activity-calendar 라이브러리가 SVG에 고정 width 속성을 설정하므로
+   CSS로 override해야 합니다.                                          */
+.cal-fill > * {
+  max-width: none !important;
+  width: 100% !important;
+}
+.cal-fill svg {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
