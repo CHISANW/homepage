@@ -5,6 +5,8 @@ import { HiPencil, HiExternalLink, HiCalendar, HiPhotograph } from 'react-icons/
 
 const BLOG_URL = 'https://back-stead.tistory.com'
 
+const RSS_PROXY = import.meta.env.VITE_RSS_PROXY_URL
+
 async function fetchRSSText(rssUrl) {
   const tryFetch = async (url, timeoutMs) => {
     const controller = new AbortController()
@@ -18,6 +20,12 @@ async function fetchRSSText(rssUrl) {
       clearTimeout(id)
       return null
     }
+  }
+
+  // 0순위: Cloudflare Worker 프록시 (환경변수로 설정)
+  if (RSS_PROXY) {
+    const r0 = await tryFetch(`${RSS_PROXY}?url=${encodeURIComponent(rssUrl)}`, 8000)
+    if (r0) return r0.text()
   }
 
   // 1순위: corsproxy.io (raw XML 반환)

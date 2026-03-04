@@ -15,17 +15,18 @@ const STATS_CONFIG = [
 ]
 
 // ══════════════════════════════════════════════════════════
-// 🐛 WormCalendar — 벌레가 잔디를 한 칸씩 먹는 컴포넌트
+// ScanCursor — 개발자 테마 스캔 커서
+//   forward(삭제): 빨간 레이저 빔  '>>'
+//   backward(복원): 초록 빔       '<<'
 // ══════════════════════════════════════════════════════════
-const THEME   = ['#1e2433', '#3730a3', '#4f46e5', '#818cf8', '#c7d2fe']
-const EATEN   = '#05070d'   // 먹힌 칸 색상 (거의 검정)
-const TRAIL   = 14          // 벌레 꼬리 길이 (칸)
-const STEP_MS = 65          // 한 칸 이동 간격 (ms)
+const THEME      = ['#1e2433', '#3730a3', '#4f46e5', '#818cf8', '#c7d2fe']
+const TRAIL_COLOR = '#0c1020'
+const TRAIL      = 12
+const STEP_MS    = 55
 
 const MONTHS    = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 const DAY_NAMES = ['', 'Mon', '', 'Wed', '', 'Fri', '']
 
-// 기여 데이터 → 주(column) 배열로 변환
 function buildCols(contributions) {
   if (!contributions?.length) return []
   const startDow = new Date(contributions[0].date + 'T00:00:00').getDay()
@@ -48,11 +49,62 @@ function getMonthLabels(cols) {
   return labels
 }
 
-// 수평 지그재그 경로: 짝수 행 L→R, 홀수 행 R→L
 function cellToPath(col, row, numCols) {
   return row % 2 === 0
     ? row * numCols + col
     : row * numCols + (numCols - 1 - col)
+}
+
+// 개발자 스캔 커서 — 빔 모양의 글로우 박스
+function ScanCursor({ blockSize, cellSize, movingRight, phase }) {
+  const isForward = phase === 'forward'
+  const color  = isForward ? '#ef4444' : '#4ade80'
+  const glow   = isForward
+    ? `0 0 4px #ef4444, 0 0 12px #f97316, 0 0 24px #ef444440`
+    : `0 0 4px #4ade80, 0 0 12px #22c55e, 0 0 24px #4ade8040`
+  // 진행 방향에 맞는 화살표
+  const label  = isForward
+    ? (movingRight ? '>>' : '<<')
+    : (movingRight ? '>>' : '<<')
+
+  return (
+    <div style={{ width: cellSize, height: cellSize, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* 세로 빔 라인 */}
+      <div style={{
+        position: 'absolute',
+        width: 2,
+        height: cellSize * 7,
+        background: isForward
+          ? 'linear-gradient(to bottom, transparent, #ef444460, #ef4444, #ef444460, transparent)'
+          : 'linear-gradient(to bottom, transparent, #4ade8060, #4ade80, #4ade8060, transparent)',
+        top: -(cellSize * 3),
+        left: cellSize / 2 - 1,
+        pointerEvents: 'none',
+      }} />
+      {/* 커서 본체 */}
+      <div style={{
+        width: blockSize + 6,
+        height: blockSize + 6,
+        borderRadius: 3,
+        background: `linear-gradient(135deg, ${color}cc, ${color}88)`,
+        border: `1px solid ${color}`,
+        boxShadow: glow,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'monospace',
+        fontWeight: 900,
+        fontSize: Math.max(7, blockSize - 3),
+        color: '#fff',
+        lineHeight: 1,
+        letterSpacing: -1,
+        userSelect: 'none',
+        flexShrink: 0,
+      }}>
+        {label}
+      </div>
+    </div>
+  )
 }
 
 function WormCalendar({ username, year, blockSize, blockMargin }) {
@@ -60,14 +112,16 @@ function WormCalendar({ username, year, blockSize, blockMargin }) {
   const [total,   setTotal]   = useState(null)
   const [loading, setLoading] = useState(true)
   const [step,    setStep]    = useState(0)
+  // 'forward' → 커서가 좌→우 이동하며 잔디를 지움
+  // 'backward' → 커서가 우→좌로 되돌아가며 잔디를 복원
+  const [phase,   setPhase]   = useState('forward')
 
   const numCols    = cols.length
   const totalCells = numCols * 7
   const cellSize   = blockSize + blockMargin
 
-  // 기여 데이터 fetch
   useEffect(() => {
-    setLoading(true); setCols([]); setTotal(null); setStep(0)
+    setLoading(true); setCols([]); setTotal(null); setStep(0); setPhase('forward')
     fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${year}`)
       .then(r => r.json())
       .then(({ contributions, total: t }) => {
@@ -78,27 +132,45 @@ function WormCalendar({ username, year, blockSize, blockMargin }) {
       .catch(() => setLoading(false))
   }, [username, year])
 
-  // 벌레 이동 타이머 (꼬리 길이만큼 오버슈트 후 리셋)
+  // 타이머: step을 증가시키되, 각 페이즈의 상한선에서 멈춤
+  // → 상한선 도달 시 setStep이 동일 값을 반환 → re-render 없음 → 전환 타임아웃이 정상 작동
   useEffect(() => {
     if (!totalCells) return
-    const id = setInterval(() => {
-      setStep(s => (s + 1) % (totalCells + TRAIL))
-    }, STEP_MS)
+    const cap = phase === 'forward'
+      ? totalCells + TRAIL + 2   // 모든 셀 소멸 완료 후 여유
+      : totalCells + 2           // 모든 셀 복원 완료 후 여유
+    const id = setInterval(() => setStep(s => s < cap ? s + 1 : s), STEP_MS)
     return () => clearInterval(id)
-  }, [totalCells])
+  }, [totalCells, phase])
+
+  // forward 완료 → backward 전환
+  useEffect(() => {
+    if (phase !== 'forward' || !totalCells || step < totalCells + TRAIL) return
+    const t = setTimeout(() => { setStep(0); setPhase('backward') }, 350)
+    return () => clearTimeout(t)
+  }, [step, phase, totalCells])
+
+  // backward 완료 → forward 재시작
+  useEffect(() => {
+    if (phase !== 'backward' || !totalCells || step < totalCells) return
+    const t = setTimeout(() => { setStep(0); setPhase('forward') }, 350)
+    return () => clearTimeout(t)
+  }, [step, phase, totalCells])
 
   const monthLabels = useMemo(() => getMonthLabels(cols), [cols])
 
-  // 벌레 머리 위치
-  const showWorm = step < totalCells
-  const headIdx  = Math.min(step, totalCells - 1)
-  const headRow  = Math.floor(headIdx / numCols)
-  const headOff  = headIdx % numCols
-  const headCol  = headRow % 2 === 0 ? headOff : numCols - 1 - headOff
-  // 🐛 이모지는 기본 왼쪽 방향 → 짝수 행(L→R)이면 뒤집기
-  const scaleX   = headRow % 2 === 0 ? -1 : 1
+  // ── 커서 위치 계산 ─────────────────────────────────────
+  const headPIdx = phase === 'forward'
+    ? Math.min(step, totalCells - 1)
+    : Math.max(totalCells - 1 - step, 0)
+  const showCursor = step < totalCells
+  const headRow    = Math.floor(headPIdx / numCols)
+  const headOff    = headPIdx % numCols
+  const headCol    = headRow % 2 === 0 ? headOff : numCols - 1 - headOff
+  // 실제 이동 방향: forward+짝수행=우, backward+짝수행=좌 (반전)
+  const movingRight = (phase === 'forward') === (headRow % 2 === 0)
 
-  // ── 로딩 스켈레톤 ────────────────────────────────────
+  // ── 로딩 스켈레톤 ─────────────────────────────────────
   if (loading) {
     return (
       <div className="animate-pulse">
@@ -182,7 +254,7 @@ function WormCalendar({ username, year, blockSize, blockMargin }) {
           ))}
         </div>
 
-        {/* 셀 그리드 + 벌레 오버레이 */}
+        {/* 셀 그리드 + 커서 오버레이 */}
         <div className="relative flex" style={{ gap: blockMargin }}>
           {cols.map((col, cIdx) => (
             <div
@@ -190,68 +262,111 @@ function WormCalendar({ username, year, blockSize, blockMargin }) {
               style={{ display: 'flex', flexDirection: 'column', gap: blockMargin, flexShrink: 0 }}
             >
               {col.map((day, rIdx) => {
-                const pIdx  = cellToPath(cIdx, rIdx, numCols)
-                const rel   = pIdx - step
-                const eaten = rel > -TRAIL && rel <= 0
-
+                const pIdx = cellToPath(cIdx, rIdx, numCols)
                 const base = day ? THEME[day.level] : THEME[0]
-                const bg   = eaten ? EATEN : base
+
+                let cellStyle
+
+                if (phase === 'forward') {
+                  // 커서가 완전히 지나간 셀 → scale(0)으로 소멸
+                  const eatenPermanently = step >= TRAIL && pIdx <= step - TRAIL
+                  // 커서 꼬리 안 셀 → 어두운 색
+                  const inTrail = pIdx > step - TRAIL && pIdx <= step
+
+                  if (eatenPermanently) {
+                    cellStyle = {
+                      transform: 'scale(0)',
+                      opacity: 0,
+                      backgroundColor: base,
+                      transition: 'transform 0.13s ease-in, opacity 0.13s ease-in',
+                    }
+                  } else if (inTrail) {
+                    cellStyle = {
+                      transform: 'scale(1)',
+                      opacity: 1,
+                      backgroundColor: TRAIL_COLOR,
+                      transition: 'background-color 0.06s ease-out',
+                    }
+                  } else {
+                    cellStyle = {
+                      transform: 'scale(1)',
+                      opacity: 1,
+                      backgroundColor: base,
+                      transition: 'background-color 0.5s ease-in',
+                    }
+                  }
+                } else {
+                  // backward: 커서가 지나가면 셀이 스프링 애니메이션으로 복원
+                  // pIdx >= totalCells - step 이면 이미 복원됨
+                  const restored = pIdx >= totalCells - step
+
+                  // transition을 항상 정의해두어야 브라우저가 변화를 감지해 애니메이션을 실행함
+                  // 'none' 대신 아주 짧은 시간(0.001s)을 사용해 즉시 적용처럼 보이게 함
+                  cellStyle = restored
+                    ? {
+                        transform: 'scale(1)',
+                        opacity: 1,
+                        backgroundColor: base,
+                        transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease-out, background-color 0.25s ease-out',
+                      }
+                    : {
+                        transform: 'scale(0)',
+                        opacity: 0,
+                        backgroundColor: base,
+                        transition: 'transform 0.001s, opacity 0.001s',
+                      }
+                }
 
                 return (
                   <div
                     key={rIdx}
-                    style={{
-                      width: blockSize,
-                      height: blockSize,
-                      borderRadius: 2,
-                      backgroundColor: bg,
-                      // 먹힐 때: 빠르게, 복원될 때: 천천히 (풀이 다시 자라는 느낌)
-                      transition: eaten
-                        ? 'background-color 0.06s ease-out'
-                        : 'background-color 0.55s ease-in',
-                    }}
+                    style={{ width: blockSize, height: blockSize, borderRadius: 2, ...cellStyle }}
                   />
                 )
               })}
             </div>
           ))}
 
-          {/* 🐛 벌레 머리 — Motion으로 부드럽게 이동 */}
-          {showWorm && (
+          {/* 스캔 커서 — Motion으로 부드럽게 이동 */}
+          {showCursor && (
             <motion.div
               className="absolute pointer-events-none z-20"
-              style={{
-                width: cellSize,
-                height: cellSize,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              style={{ width: cellSize, height: cellSize }}
               animate={{
-                left:   headCol * cellSize,
-                top:    headRow * cellSize,
-                scaleX,
+                left: headCol * cellSize,
+                top:  headRow * cellSize,
               }}
               transition={{
-                left:   { duration: STEP_MS / 1000 * 0.85, ease: 'linear' },
-                top:    { duration: STEP_MS / 1000 * 0.85, ease: 'linear' },
-                scaleX: { duration: 0.07 },
+                left: { duration: STEP_MS / 1000 * 0.85, ease: 'linear' },
+                top:  { duration: STEP_MS / 1000 * 0.85, ease: 'linear' },
               }}
             >
-              <span style={{ fontSize: Math.max(9, blockSize - 1), lineHeight: 1, userSelect: 'none' }}>
-                🐛
-              </span>
+              <ScanCursor
+                blockSize={blockSize}
+                cellSize={cellSize}
+                movingRight={movingRight}
+                phase={phase}
+              />
             </motion.div>
           )}
         </div>
       </div>
 
-      {/* 총 기여 수 */}
-      {total !== null && (
-        <div className="mt-4 text-xs font-mono" style={{ color: '#8b949e' }}>
-          {total}개의 기여 ({year})
-        </div>
-      )}
+      {/* 페이즈 상태 + 총 기여 수 */}
+      <div className="mt-4 flex items-center gap-3">
+        {total !== null && (
+          <span className="text-xs font-mono" style={{ color: '#8b949e' }}>
+            {total}개의 기여 ({year})
+          </span>
+        )}
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{
+          background: phase === 'forward' ? '#ef444415' : '#4ade8015',
+          color:      phase === 'forward' ? '#ef4444'   : '#4ade80',
+          border:     `1px solid ${phase === 'forward' ? '#ef444430' : '#4ade8030'}`,
+        }}>
+          {phase === 'forward' ? '>> scanning' : '<< restoring'}
+        </span>
+      </div>
     </div>
   )
 }

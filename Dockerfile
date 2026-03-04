@@ -1,12 +1,14 @@
-# 빌드 단계
 FROM node:20-alpine AS build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+
+ARG VITE_RSS_PROXY_URL
+ENV VITE_RSS_PROXY_URL=$VITE_RSS_PROXY_URL
+
 RUN npm run build
 
-# 실행 단계
 FROM node:20-alpine
 WORKDIR /app
 RUN npm install -g serve
