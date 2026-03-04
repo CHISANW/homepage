@@ -234,7 +234,7 @@ export default function Hero() {
                 className="btn-outline w-full sm:w-auto justify-center"
               >
                 <FaEnvelope className="w-5 h-5" />
-                연락하기
+                Contact
               </a>
             </motion.div>
 

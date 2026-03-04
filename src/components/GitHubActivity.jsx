@@ -441,7 +441,7 @@ export default function GitHubActivity({ darkMode }) {
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4 text-transparent bg-clip-text"
             style={{ backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%)' }}
           >
-            GitHub 활동
+            GitHub Activity
           </h2>
           <p className="font-mono text-sm" style={{ color: '#555' }}>
             # 꾸준한 커밋으로 성장하는 개발자입니다

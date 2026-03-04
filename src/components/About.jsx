@@ -110,7 +110,7 @@ export default function About() {
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4 text-transparent bg-clip-text"
             style={{ backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%)' }}
           >
-            저를 소개합니다
+            About Me
           </h2>
 
           <p className="font-mono text-sm" style={{ color: '#555' }}>

@@ -6,7 +6,10 @@
       "Bash(npm run:*)",
       "WebFetch(domain:github-contributions-api.jogruber.de)",
       "WebFetch(domain:back-stead.tistory.com)",
-      "WebFetch(domain:api.allorigins.win)"
+      "WebFetch(domain:api.allorigins.win)",
+      "WebFetch(domain:play.google.com)",
+      "WebFetch(domain:runtime-simvex.vercel.app)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }

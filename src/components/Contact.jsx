@@ -104,7 +104,7 @@ export default function Contact() {
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4 text-transparent bg-clip-text"
             style={{ backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%)' }}
           >
-            연락하기
+            Contact
           </h2>
           <p className="font-mono text-sm" style={{ color: '#555' }}>
             # 협업, 취업 제안, 또는 궁금한 점이 있으시면 언제든지 연락해주세요

@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FaJava, FaDocker, FaGit } from 'react-icons/fa'
+import { FaJava, FaDocker, FaGit, FaAws } from 'react-icons/fa'
 import {
   SiSpring, SiKubernetes, SiMysql, SiRedis,
-  SiElasticsearch, SiGithubactions, SiPostgresql,
-  SiLinux, SiJenkins, SiIntellijidea, SiPostman, SiSpringboot,
+  SiElasticsearch, SiNestjs, SiTypescript,
+  SiLinux, SiJenkins, SiIntellijidea, SiPostman, SiSpringboot, SiApachekafka,
 } from 'react-icons/si'
 
 const CATEGORIES = [
@@ -13,10 +13,12 @@ const CATEGORIES = [
     color: '#818cf8',
     comment: '# Java 생태계 중심의 백엔드 개발',
     skills: [
-      { name: 'Java',            icon: FaJava,       level: 85 },
-      { name: 'Spring Boot',     icon: SiSpringboot, level: 80 },
-      { name: 'Spring Security', icon: SiSpring,     level: 70 },
-      { name: 'JPA / Hibernate', icon: FaJava,       level: 70 },
+      { name: 'Java',            icon: FaJava,        level: 67 },
+      { name: 'Spring Boot',     icon: SiSpringboot,  level: 67 },
+      { name: 'Spring Security', icon: SiSpring,      level: 40 },
+      { name: 'JPA / Hibernate', icon: FaJava,        level: 54 },
+      { name: 'NestJS',          icon: SiNestjs,      level: 55 },
+      { name: 'TypeScript',      icon: SiTypescript,  level: 42 },
     ],
   },
   {
@@ -24,10 +26,11 @@ const CATEGORIES = [
     color: '#38bdf8',
     comment: '# 컨테이너 기반 클라우드 네이티브',
     skills: [
-      { name: 'Docker',          icon: FaDocker,        level: 80 },
-      { name: 'Kubernetes',      icon: SiKubernetes,    level: 70 },
-      { name: 'GitHub Actions',  icon: SiGithubactions, level: 65 },
+      { name: 'Docker',          icon: FaDocker,        level: 60 },
+      { name: 'Kubernetes',      icon: SiKubernetes,    level: 31 },
       { name: 'Jenkins',         icon: SiJenkins,       level: 55 },
+      { name: 'AWS',             icon: FaAws,           level: 49 },
+      { name: 'Kafka',           icon: SiApachekafka,   level: 30 },
     ],
   },
   {
@@ -35,10 +38,9 @@ const CATEGORIES = [
     color: '#4ade80',
     comment: '# 다양한 데이터 저장소 활용',
     skills: [
-      { name: 'MySQL',           icon: SiMysql,         level: 80 },
-      { name: 'Redis',           icon: SiRedis,         level: 70 },
-      { name: 'Elasticsearch',   icon: SiElasticsearch, level: 65 },
-      { name: 'PostgreSQL',      icon: SiPostgresql,    level: 55 },
+      { name: 'MySQL',           icon: SiMysql,         level: 66 },
+      { name: 'Redis',           icon: SiRedis,         level: 52 },
+      { name: 'Elasticsearch',   icon: SiElasticsearch, level: 40 },
     ],
   },
   {
@@ -46,7 +48,7 @@ const CATEGORIES = [
     color: '#fbbf24',
     comment: '# 개발 생산성 도구',
     skills: [
-      { name: 'Git',             icon: FaGit,           level: 85 },
+      { name: 'Git',             icon: FaGit,           level: 70 },
       { name: 'Linux',           icon: SiLinux,         level: 70 },
       { name: 'IntelliJ IDEA',   icon: SiIntellijidea,  level: 85 },
       { name: 'Postman',         icon: SiPostman,       level: 75 },
@@ -103,7 +105,7 @@ export default function Skills() {
             className="text-4xl sm:text-5xl font-black tracking-tight mb-4 text-transparent bg-clip-text"
             style={{ backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%)' }}
           >
-            기술 스택
+            Tech Stack
           </h2>
           <p className="font-mono text-sm" style={{ color: '#555' }}>
             # 백엔드 개발을 중심으로 다양한 기술들을 학습하고 활용합니다
@@ -175,7 +177,7 @@ export default function Skills() {
               style={{ borderTop: '1px solid #1e2433' }}
             >
               <span style={{ color: '#8b949e' }}>{'// TODO: Currently Learning →'}</span>
-              {['Kafka ⚡', 'AWS ☁️'].map((t, i) => (
+              {['LLM 🤖', 'RAG 🔍', 'AI Agent 🧠'].map((t, i) => (
                 <span
                   key={t}
                   className="px-2.5 py-0.5 rounded"
