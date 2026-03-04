@@ -7,7 +7,7 @@ COPY . .
 RUN npm run build
 
 # 실행 단계
-FROM node:20-alpine AS production-stage
+FROM node:20-alpine
 WORKDIR /app
 RUN npm install -g serve
 COPY --from=build-stage /app/dist ./dist
