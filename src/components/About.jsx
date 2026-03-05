@@ -1,35 +1,35 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
 const HIGHLIGHTS = [
   {
     cmd: './backend.sh',
-    title: '백엔드 개발',
-    desc: 'Java와 Spring Boot 기반으로 REST API를 설계하고 운영 환경까지 고려해 구현합니다.',
+    title: '\uBC31\uC5D4\uB4DC \uAC1C\uBC1C',
+    desc: 'Java\uC640 Spring Boot \uAE30\uBC18\uC73C\uB85C REST API\uB97C \uC124\uACC4\uD558\uACE0 \uC6B4\uC601 \uD658\uACBD\uAE4C\uC9C0 \uACE0\uB824\uD574 \uAD6C\uD604\uD569\uB2C8\uB2E4.',
     accent: '#818cf8',
   },
   {
     cmd: './devops.sh',
-    title: '클라우드 & DevOps',
-    desc: 'Docker, Kubernetes 중심으로 배포 파이프라인을 구성하고 안정적으로 운영합니다.',
+    title: '\uD074\uB77C\uC6B0\uB4DC & DevOps',
+    desc: 'Docker, Kubernetes \uC911\uC2EC\uC73C\uB85C \uBC30\uD3EC \uD30C\uC774\uD504\uB77C\uC778\uC744 \uAD6C\uC131\uD558\uACE0 \uC548\uC815\uC801\uC73C\uB85C \uC6B4\uC601\uD569\uB2C8\uB2E4.',
     accent: '#38bdf8',
   },
   {
     cmd: './database.sh',
-    title: '데이터 엔지니어링',
-    desc: 'MySQL, Redis, Elasticsearch를 활용해 조회 성능과 저장 구조를 함께 최적화합니다.',
+    title: '\uB370\uC774\uD130 \uC5D4\uC9C0\uB2C8\uC5B4\uB9C1',
+    desc: 'MySQL, Redis, Elasticsearch\uB97C \uD65C\uC6A9\uD574 \uC870\uD68C \uC131\uB2A5\uACFC \uC800\uC7A5 \uAD6C\uC870\uB97C \uD568\uAED8 \uCD5C\uC801\uD654\uD569\uB2C8\uB2E4.',
     accent: '#4ade80',
   },
   {
     cmd: './growth.sh',
-    title: '지속적 성장',
-    desc: '기술 학습과 협업 회고를 통해 팀의 개발 생산성과 코드 품질을 꾸준히 높입니다.',
+    title: '\uC9C0\uC18D\uC801 \uC131\uC7A5',
+    desc: '\uAE30\uC220 \uD559\uC2B5\uACFC \uD611\uC5C5 \uD68C\uACE0\uB97C \uD1B5\uD574 \uD300\uC758 \uAC1C\uBC1C \uC0DD\uC0B0\uC131\uACFC \uCF54\uB4DC \uD488\uC9C8\uC744 \uAFB8\uC900\uD788 \uB192\uC785\uB2C8\uB2E4.',
     accent: '#fbbf24',
   },
 ]
 
 const ENV_VARS = [
-  { key: 'CAREER', val: '1년차', vc: '#a5d6ff' },
+  { key: 'CAREER', val: '1\uB144\uCC28', vc: '#a5d6ff' },
   { key: 'LANG', val: 'Java', vc: '#ffa657' },
   { key: 'LOCATION', val: 'Korea, Republic of', vc: '#a5d6ff' },
   { key: 'GITHUB', val: 'CHISANW', vc: '#a5d6ff' },
@@ -56,9 +56,7 @@ function TerminalWindow({ title, children, className = '' }) {
           {title}
         </span>
       </div>
-      <div
-        className="rounded-b-xl border border-t-0 border-[#30363d] bg-[#0d1117] p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto"
-      >
+      <div className="rounded-b-xl border border-t-0 border-[#30363d] bg-[#0d1117] p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto">
         {children}
       </div>
     </div>
@@ -89,7 +87,7 @@ export default function About() {
   const [ref, inView] = useInView({ threshold: 0.05, triggerOnce: true })
 
   return (
-    <section id="about" className="about-dot-bg relative overflow-hidden py-24">
+    <section id="about" className="about-dot-bg relative py-24">
       <div ref={ref} className="section-container relative">
         <motion.div
           className="mb-14 text-center"
@@ -110,27 +108,21 @@ export default function About() {
           </h2>
 
           <p className="font-mono text-sm" style={{ color: '#555' }}>
-            # 1년차 백엔드 개발자 · Java · Spring Boot · Cloud Native
+            {'# 1\uB144\uCC28 \uBC31\uC5D4\uB4DC \uAC1C\uBC1C\uC790 \u00B7 Java \u00B7 Spring Boot \u00B7 Cloud Native'}
           </p>
         </motion.div>
 
         <div className="mb-6 grid gap-5 lg:grid-cols-2">
           <motion.div {...slideUp(0.1)} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}>
             <TerminalWindow title="bio.txt | cat">
-              <div className="min-w-[280px]">
+              <div className="min-w-0">
                 <PromptLine cmd="cat bio.txt" />
 
                 <div className="mb-5 text-[12px] sm:text-[13px] leading-[1.85]" style={{ color: '#8b949e' }}>
-                  <p className="mb-2">
-                    안녕하세요. 저는 <span style={{ color: '#e2e8f0', fontWeight: 600 }}>김민우</span>입니다.
-                  </p>
-                  <p className="mb-2">
-                    Java와 Spring Boot를 주력으로 사용하는 백엔드 개발자이며, 안정적이고 확장 가능한 서비스를 만드는 데 집중하고 있습니다.
-                  </p>
-                  <p className="mb-2">
-                    컨테이너 기반 클라우드 환경에서 개발하는 것을 선호하고, 데이터 계층 성능 개선에도 지속적으로 관심을 갖고 있습니다.
-                  </p>
-                  <p>협업에서는 명확한 커뮤니케이션과 책임 있는 실행을 가장 중요하게 생각합니다.</p>
+                  <p className="mb-2">{`\uC548\uB155\uD558\uC138\uC694. \uC800\uB294 `}<span style={{ color: '#e2e8f0', fontWeight: 600 }}>{'\uAE40\uBBFC\uC6B0'}</span>{'\uC785\uB2C8\uB2E4.'}</p>
+                  <p className="mb-2">{'Java\uC640 Spring Boot\uB97C \uC8FC\uB825\uC73C\uB85C \uC0AC\uC6A9\uD558\uB294 \uBC31\uC5D4\uB4DC \uAC1C\uBC1C\uC790\uC774\uBA70, \uC548\uC815\uC801\uC774\uACE0 \uD655\uC7A5 \uAC00\uB2A5\uD55C \uC11C\uBE44\uC2A4\uB97C \uB9CC\uB4DC\uB294 \uB370 \uC9D1\uC911\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.'}</p>
+                  <p className="mb-2">{'\uCEE8\uD14C\uC774\uB108 \uAE30\uBC18 \uD074\uB77C\uC6B0\uB4DC \uD658\uACBD\uC5D0\uC11C \uAC1C\uBC1C\uD558\uB294 \uAC83\uC744 \uC120\uD638\uD558\uACE0, \uB370\uC774\uD130 \uACC4\uCE35 \uC131\uB2A5 \uAC1C\uC120\uC5D0\uB3C4 \uC9C0\uC18D\uC801\uC73C\uB85C \uAD00\uC2EC\uC744 \uAC16\uACE0 \uC788\uC2B5\uB2C8\uB2E4.'}</p>
+                  <p>{'\uD611\uC5C5\uC5D0\uC11C\uB294 \uBA85\uD655\uD55C \uCEE4\uBBA4\uB2C8\uCF00\uC774\uC158\uACFC \uCC45\uC784 \uC788\uB294 \uC2E4\uD589\uC744 \uAC00\uC7A5 \uC911\uC694\uD558\uAC8C \uC0DD\uAC01\uD569\uB2C8\uB2E4.'}</p>
                 </div>
 
                 <PromptLine cmd="env | grep DEV_" />
@@ -161,13 +153,12 @@ export default function About() {
 
           <motion.div {...slideUp(0.22)} animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}>
             <TerminalWindow title="Developer.java | vim">
-              <div className="min-w-[520px] text-[12px] sm:text-[13px] leading-[1.85]">
+              <div className="min-w-0 lg:min-w-[520px] text-[12px] sm:text-[13px] leading-[1.85]">
                 <PromptLine cmd="vim Developer.java" />
-
                 <div className="mb-2 text-[11px]" style={{ color: '#30363d' }}>{'-'.repeat(52)}</div>
 
                 <div><Kw c="public class" /> <Fn c="Developer" /> {'{'}</div>
-                <div className="pl-4"><Kw c="private" /> <Tp c=" String" />{' name = '}<Str c='"김민우"' />; <Cm c="// Author" /></div>
+                <div className="pl-4"><Kw c="private" /> <Tp c=" String" />{' name = '}<Str c='"\uAE40\uBBFC\uC6B0"' />; <Cm c="// Author" /></div>
                 <div className="pl-4"><Kw c="private" /> <Tp c=" int" />{' career = '}<span style={{ color: '#79c0ff' }}>1</span>; <Cm c="// years" /></div>
                 <div className="pl-4"><Kw c="private" /> <Tp c=" boolean" />{' available = '}<span style={{ color: '#79c0ff' }}>true</span>;</div>
                 <div>&nbsp;</div>
@@ -177,22 +168,11 @@ export default function About() {
                 <div className="pl-4">{'};'}</div>
                 <div>&nbsp;</div>
                 <div className="pl-4"><Kw c="public" /> <Tp c=" String" /> <Fn c="getMotto" />{'() {'}</div>
-                <div className="pl-8"><Kw c="return" /> <Str c='"코드로 가치를 만든다"' />;</div>
+                <div className="pl-8"><Kw c="return" /> <Str c='"\uCF54\uB4DC\uB85C \uAC00\uCE58\uB97C \uB9CC\uB4E0\uB2E4"' />;</div>
                 <div className="pl-4">{'}'}</div>
-                <div>
-                  {'}'}
-                  <motion.span
-                    className="ml-0.5 inline-block h-[1em] w-[7px] rounded-[1px] align-text-bottom"
-                    style={{ background: '#6366f1', opacity: 0.9 }}
-                    animate={{ opacity: [0.9, 0, 0.9] }}
-                    transition={{ duration: 0.85, repeat: Infinity }}
-                  />
-                </div>
+                <div>{'}'}</div>
 
-                <div
-                  className="mt-4 flex justify-between rounded-[2px] px-2 py-0.5 text-[11px] font-mono"
-                  style={{ background: '#818cf8', color: '#0d1117' }}
-                >
+                <div className="mt-4 flex justify-between rounded-[2px] px-2 py-0.5 text-[11px] font-mono" style={{ background: '#818cf8', color: '#0d1117' }}>
                   <span>-- NORMAL --</span>
                   <span>"Developer.java" 14L, 328B</span>
                 </div>
@@ -221,10 +201,7 @@ export default function About() {
               </div>
 
               <div className="mb-2 text-sm font-bold" style={{ color: '#e2e8f0' }}>{title}</div>
-
-              <p className="text-xs leading-relaxed" style={{ color: '#8b949e', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}>
-                {desc}
-              </p>
+              <p className="text-xs leading-relaxed" style={{ color: '#8b949e', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}>{desc}</p>
 
               <div className="mt-4 flex items-center gap-1.5 border-t border-[#1e2433] pt-3 text-[10px]" style={{ color: '#555' }}>
                 <motion.span
