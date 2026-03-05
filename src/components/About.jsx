@@ -56,7 +56,7 @@ function TerminalWindow({ title, children, className = '' }) {
           {title}
         </span>
       </div>
-      <div className="rounded-b-xl border border-t-0 border-[#30363d] bg-[#0d1117] p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto lg:overflow-x-hidden">
+      <div className="rounded-b-xl border border-t-0 border-[#30363d] bg-[#0d1117] p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-hidden">
         {children}
       </div>
     </div>
@@ -119,7 +119,7 @@ export default function About() {
                 <PromptLine cmd="cat bio.txt" />
 
                 <div className="mb-5 text-[12px] sm:text-[13px] leading-[1.85]" style={{ color: '#8b949e' }}>
-                  <p className="mb-2">{`\uC548\uB155\uD558\uC138\uC694. \uC800\uB294 `}<span style={{ color: '#e2e8f0', fontWeight: 600 }}>{'繹먃沃섏눘??}</span>{'\uC785\uB2C8\uB2E4.'}</p>
+                  <p className="mb-2">{`\uC548\uB155\uD558\uC138\uC694. \uC800\uB294 `}<span style={{ color: '#e2e8f0', fontWeight: 600 }}>{'濚밸쮦?亦껋꼷???}</span>{'\uC785\uB2C8\uB2E4.'}</p>
                   <p className="mb-2">{'Java\uC640 Spring Boot\uB97C \uC8FC\uB825\uC73C\uB85C \uC0AC\uC6A9\uD558\uB294 \uBC31\uC5D4\uB4DC \uAC1C\uBC1C\uC790\uC774\uBA70, \uC548\uC815\uC801\uC774\uACE0 \uD655\uC7A5 \uAC00\uB2A5\uD55C \uC11C\uBE44\uC2A4\uB97C \uB9CC\uB4DC\uB294 \uB370 \uC9D1\uC911\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.'}</p>
                   <p className="mb-2">{'\uCEE8\uD14C\uC774\uB108 \uAE30\uBC18 \uD074\uB77C\uC6B0\uB4DC \uD658\uACBD\uC5D0\uC11C \uAC1C\uBC1C\uD558\uB294 \uAC83\uC744 \uC120\uD638\uD558\uACE0, \uB370\uC774\uD130 \uACC4\uCE35 \uC131\uB2A5 \uAC1C\uC120\uC5D0\uB3C4 \uC9C0\uC18D\uC801\uC73C\uB85C \uAD00\uC2EC\uC744 \uAC16\uACE0 \uC788\uC2B5\uB2C8\uB2E4.'}</p>
                   <p>{'\uD611\uC5C5\uC5D0\uC11C\uB294 \uBA85\uD655\uD55C \uCEE4\uBBA4\uB2C8\uCF00\uC774\uC158\uACFC \uCC45\uC784 \uC788\uB294 \uC2E4\uD589\uC744 \uAC00\uC7A5 \uC911\uC694\uD558\uAC8C \uC0DD\uAC01\uD569\uB2C8\uB2E4.'}</p>
@@ -158,7 +158,7 @@ export default function About() {
                 <div className="mb-2 h-px w-full" style={{ background: '#30363d' }} />
 
                 <div><Kw c="public class" /> <Fn c="Developer" /> {'{'}</div>
-                <div className="pl-4"><Kw c="private" /> <Tp c=" String" />{' name = '}<Str c='"繹먃沃섏눘??' />; <Cm c="// Author" /></div>
+                <div className="pl-4"><Kw c="private" /> <Tp c=" String" />{' name = '}<Str c='"濚밸쮦?亦껋꼷???' />; <Cm c="// Author" /></div>
                 <div className="pl-4"><Kw c="private" /> <Tp c=" int" />{' career = '}<span style={{ color: '#79c0ff' }}>1</span>; <Cm c="// years" /></div>
                 <div className="pl-4"><Kw c="private" /> <Tp c=" boolean" />{' available = '}<span style={{ color: '#79c0ff' }}>true</span>;</div>
                 <div>&nbsp;</div>
@@ -168,7 +168,7 @@ export default function About() {
                 <div className="pl-4">{'};'}</div>
                 <div>&nbsp;</div>
                 <div className="pl-4"><Kw c="public" /> <Tp c=" String" /> <Fn c="getMotto" />{'() {'}</div>
-                <div className="pl-8"><Kw c="return" /> <Str c='"?꾨뗀諭뜻에?揶쎛燁살꼶? 筌띾슢諭??' />;</div>
+                <div className="pl-8"><Kw c="return" /> <Str c='"?袁⑤?獄?쑜???띠럾??곸궡瑗? 嶺뚮씭??キ??' />;</div>
                 <div className="pl-4">{'}'}</div>
                 <div>{'}'}</div>
 
