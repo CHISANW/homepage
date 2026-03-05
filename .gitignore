@@ -23,6 +23,7 @@ CLAUDE.md
 *.njsproj
 *.sln
 *.sw?
+skills/
 
 # Vercel
 .vercel

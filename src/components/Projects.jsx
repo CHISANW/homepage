@@ -4,13 +4,11 @@ import { useInView } from 'react-intersection-observer'
 import { FaGithub, FaStar, FaCodeBranch, FaExternalLinkAlt, FaGooglePlay, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { HiRefresh } from 'react-icons/hi'
 
-// ─────────────────────────────────────────────────────────
-// ✏️  직접 개발한 프로젝트 — 슬라이드 카드로 표시됩니다
-// ─────────────────────────────────────────────────────────
+// 직접 개발/참여한 대표 프로젝트를 카드로 노출
 const FEATURED_PROJECTS = [
   {
     title: 'Hambug',
-    description: '실제 서비스 중인 안드로이드 앱입니다. 백엔드 API 개발 및 서버 인프라 구축을 담당했습니다.',
+    description: '실제 서비스 중인 안드로이드 앱입니다. 백엔드 API 개발과 서버 인프라 구축을 담당했습니다.',
     tech: ['Spring Boot', 'Kubernetes', 'Docker', 'MySQL', 'Redis'],
     image: '/hambug.png',
     imageFit: 'contain',
@@ -23,7 +21,7 @@ const FEATURED_PROJECTS = [
   },
   {
     title: 'SIMVEX Runtime',
-    description: '해커톤 프로젝트 — 차세대 공학자들의 기계 학습 어려움을 해결하는 3D 물리 시뮬레이션 웹 서비스입니다.',
+    description: '캡스톤 프로젝트로, 공학 전공자들의 기계 학습 이해를 돕는 3D 물리 시뮬레이터 웹 서비스입니다.',
     tech: ['NestJS', 'Next.js', 'TypeScript', 'Vercel'],
     image: '/simvex.png',
     imageFit: 'cover',
@@ -34,20 +32,31 @@ const FEATURED_PROJECTS = [
     gradient: 'linear-gradient(135deg, #7c3aed20, #38bdf820)',
     accent: '#818cf8',
   },
+  {
+    title: 'Healica Survey',
+    description: '헬스케어 설문 기반 사용자 입력을 수집하고 결과 흐름을 제공하는 웹 프로젝트입니다.',
+    tech: ['React', 'Vite', 'JavaScript', 'Vercel'],
+    imageFit: 'cover',
+    demo: 'https://healica.vercel.app/',
+    github: 'https://github.com/CHISANW/helica-survey',
+    badge: 'Web App',
+    badgeColor: '#2563eb',
+    gradient: 'linear-gradient(135deg, #2563eb20, #06b6d420)',
+    accent: '#38bdf8',
+  },
 ]
-// ─────────────────────────────────────────────────────────
 
 const LANG_COLORS = {
-  Java:       '#b07219',
+  Java: '#b07219',
   JavaScript: '#f1e05a',
   TypeScript: '#3178c6',
-  Python:     '#3572A5',
-  Go:         '#00ADD8',
-  Kotlin:     '#A97BFF',
-  Shell:      '#89e051',
-  HTML:       '#e34c26',
-  CSS:        '#563d7c',
-  default:    '#8b949e',
+  Python: '#3572A5',
+  Go: '#00ADD8',
+  Kotlin: '#A97BFF',
+  Shell: '#89e051',
+  HTML: '#e34c26',
+  CSS: '#563d7c',
+  default: '#8b949e',
 }
 
 function TerminalChrome({ title }) {
@@ -66,7 +75,6 @@ function TerminalChrome({ title }) {
   )
 }
 
-// 슬라이드 한 장짜리 카드
 function FeaturedCard({ project }) {
   return (
     <div
@@ -77,7 +85,6 @@ function FeaturedCard({ project }) {
         height: 260,
       }}
     >
-      {/* 상단 이미지 영역 */}
       <div
         className="h-24 flex items-center justify-center relative overflow-hidden"
         style={{ background: project.gradient }}
@@ -88,7 +95,7 @@ function FeaturedCard({ project }) {
             : <img src={project.image} alt={project.title} className="h-14 w-14 object-contain" />
           : <FaGooglePlay className="w-10 h-10" style={{ color: project.accent }} />
         }
-        {/* 뱃지 */}
+
         <div
           className="absolute top-3 left-3 font-mono text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1"
           style={{ background: project.badgeColor, color: '#fff' }}
@@ -98,26 +105,35 @@ function FeaturedCard({ project }) {
         </div>
       </div>
 
-      {/* 카드 내용 */}
       <div className="p-4 flex flex-col flex-1 font-mono">
         <div className="text-sm font-bold mb-1.5" style={{ color: '#e2e8f0' }}>
           {project.title}
         </div>
-        <p className="text-[11px] leading-relaxed mb-3 flex-1 line-clamp-2" style={{ color: '#8b949e', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}>
+        <p
+          className="text-[11px] leading-relaxed mb-3 flex-1 line-clamp-2"
+          style={{ color: '#8b949e', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}
+        >
           {project.description}
         </p>
-        {/* 기술 태그 */}
+
         <div className="flex flex-wrap gap-1 mb-3">
-          {project.tech.slice(0, 4).map(t => (
-            <span key={t} className="px-1.5 py-0.5 text-[9px] rounded" style={{ background: '#1e2433', color: '#818cf8', border: '1px solid #818cf820' }}>
+          {project.tech.slice(0, 4).map((t) => (
+            <span
+              key={t}
+              className="px-1.5 py-0.5 text-[9px] rounded"
+              style={{ background: '#1e2433', color: '#818cf8', border: '1px solid #818cf820' }}
+            >
               {t}
             </span>
           ))}
         </div>
-        {/* 링크 버튼 */}
+
         <div className="flex gap-2">
           {project.store && (
-            <a href={project.store} target="_blank" rel="noopener noreferrer"
+            <a
+              href={project.store}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[11px] font-semibold transition-opacity hover:opacity-80"
               style={{ background: project.badgeColor, color: '#fff' }}
             >
@@ -125,7 +141,10 @@ function FeaturedCard({ project }) {
             </a>
           )}
           {project.demo && (
-            <a href={project.demo} target="_blank" rel="noopener noreferrer"
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[11px] font-semibold transition-opacity hover:opacity-80"
               style={{ background: project.badgeColor, color: '#fff' }}
             >
@@ -133,7 +152,10 @@ function FeaturedCard({ project }) {
             </a>
           )}
           {project.github && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer"
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center gap-1 px-3 py-1.5 rounded-lg text-[11px] transition-colors hover:border-gray-500"
               style={{ border: '1px solid #30363d', color: '#8b949e' }}
             >
@@ -146,13 +168,12 @@ function FeaturedCard({ project }) {
   )
 }
 
-// 수평 슬라이드 캐러셀
 function FeaturedCarousel() {
   const trackRef = useRef(null)
-  const [canLeft, setCanLeft]   = useState(false)
+  const [canLeft, setCanLeft] = useState(false)
   const [canRight, setCanRight] = useState(false)
 
-  const CARD_W = 320 + 16 // card width + gap
+  const CARD_W = 320 + 16
 
   const updateArrows = () => {
     const el = trackRef.current
@@ -177,7 +198,6 @@ function FeaturedCarousel() {
 
   return (
     <div className="relative">
-      {/* 좌우 화살표 */}
       {canLeft && (
         <button
           onClick={() => scroll(-1)}
@@ -197,7 +217,6 @@ function FeaturedCarousel() {
         </button>
       )}
 
-      {/* 스크롤 트랙 */}
       <div
         ref={trackRef}
         className="flex gap-4 overflow-x-auto pb-2"
@@ -223,7 +242,6 @@ function RepoCard({ repo }) {
       }}
     >
       <div className="p-5 flex flex-col h-full">
-        {/* 헤더 */}
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex items-center gap-2 min-w-0">
             <FaGithub className="w-4 h-4 shrink-0" style={{ color: '#6b7280' }} />
@@ -248,23 +266,27 @@ function RepoCard({ repo }) {
           </a>
         </div>
 
-        {/* 설명 */}
-        <p className="text-xs leading-relaxed flex-1 mb-4 line-clamp-3" style={{ color: '#8b949e', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}>
+        <p
+          className="text-xs leading-relaxed flex-1 mb-4 line-clamp-3"
+          style={{ color: '#8b949e', fontFamily: 'ui-sans-serif, system-ui, sans-serif' }}
+        >
           {repo.description || '// no description'}
         </p>
 
-        {/* 토픽 */}
         {repo.topics?.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-4">
-            {repo.topics.slice(0, 4).map(topic => (
-              <span key={topic} className="px-2 py-0.5 font-mono text-[10px] rounded" style={{ background: '#1e2433', color: '#818cf8', border: '1px solid #818cf820' }}>
+            {repo.topics.slice(0, 4).map((topic) => (
+              <span
+                key={topic}
+                className="px-2 py-0.5 font-mono text-[10px] rounded"
+                style={{ background: '#1e2433', color: '#818cf8', border: '1px solid #818cf820' }}
+              >
                 {topic}
               </span>
             ))}
           </div>
         )}
 
-        {/* 푸터 */}
         <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid #1e2433' }}>
           <div className="flex items-center gap-3">
             {repo.language && (
@@ -295,7 +317,7 @@ function RepoCard({ repo }) {
   )
 }
 
-// 고정 표시할 레포 목록 (owner/repo 형태)
+// 고정 표시할 레포 목록 (owner/repo 형식)
 const PINNED_REPOS = [
   'Team9994/commitbody-back',
   'CHISANW/algorithm',
@@ -315,12 +337,12 @@ export default function Projects() {
     setError(null)
     try {
       const results = await Promise.all(
-        PINNED_REPOS.map(path =>
-          fetch(`https://api.github.com/repos/${path}`).then(r => {
+        PINNED_REPOS.map((path) =>
+          fetch(`https://api.github.com/repos/${path}`).then((r) => {
             if (!r.ok) throw new Error(`${path}: ${r.status}`)
             return r.json()
-          })
-        )
+          }),
+        ),
       )
       setRepos(results)
     } catch (err) {
@@ -330,15 +352,15 @@ export default function Projects() {
     }
   }
 
-  useEffect(() => { fetchRepos() }, [])
+  useEffect(() => {
+    fetchRepos()
+  }, [])
 
   const displayed = repos
 
   return (
     <section id="projects" className="about-dot-bg py-24 overflow-hidden">
       <div ref={ref} className="section-container">
-
-        {/* 섹션 헤더 */}
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
@@ -357,18 +379,16 @@ export default function Projects() {
             Projects
           </h2>
           <p className="font-mono text-sm" style={{ color: '#555' }}>
-            # Projects I've built and contributed to
+            # Projects I have built and contributed to
           </p>
         </motion.div>
 
-        {/* Featured Projects */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
           className="mb-10"
         >
-          {/* 서브헤더 */}
           <div className="flex items-center gap-3 mb-5 font-mono text-xs" style={{ color: '#555' }}>
             <span style={{ color: '#4ade80' }}>#</span>
             <span style={{ color: '#8b949e' }}>Featured Projects</span>
@@ -378,7 +398,6 @@ export default function Projects() {
           <FeaturedCarousel />
         </motion.div>
 
-        {/* GitHub Repos */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -390,7 +409,6 @@ export default function Projects() {
             <div className="flex-1 h-px" style={{ background: '#1e2433' }} />
           </div>
 
-          {/* 새로고침 */}
           <div className="flex justify-end mb-6">
             <button
               onClick={fetchRepos}
@@ -403,7 +421,6 @@ export default function Projects() {
             </button>
           </div>
 
-          {/* 콘텐츠 */}
           {loading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[...Array(6)].map((_, i) => (
@@ -423,11 +440,11 @@ export default function Projects() {
             </div>
           ) : displayed.length === 0 ? (
             <div className="rounded-xl p-8 text-center font-mono text-sm" style={{ background: '#0d1117', border: '1px solid #30363d', color: '#8b949e' }}>
-              No repositories found for language: {filter}
+              고정 레포지토리를 찾지 못했습니다.
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {displayed.map(repo => <RepoCard key={repo.id} repo={repo} />)}
+              {displayed.map((repo) => <RepoCard key={repo.id} repo={repo} />)}
             </div>
           )}
 
