@@ -370,9 +370,12 @@ export default function Projects() {
     setLoading(true)
     setError(null)
     try {
+      const headers = import.meta.env.VITE_GITHUB_TOKEN
+        ? { Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}` }
+        : {}
       const results = await Promise.all(
         PINNED_REPOS.map((path) =>
-          fetch(`https://api.github.com/repos/${path}`).then((r) => {
+          fetch(`https://api.github.com/repos/${path}`, { headers }).then((r) => {
             if (!r.ok) throw new Error(`${path}: ${r.status}`)
             return r.json()
           }),
