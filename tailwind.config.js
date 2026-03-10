@@ -10,7 +10,7 @@ export default {
       fontFamily: {
         sans: ['Pretendard', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-      },ㅎ
+      },
       colors: {
         primary: {
           50: '#eff6ff',
