@@ -10,7 +10,7 @@ export default {
       fontFamily: {
         sans: ['Pretendard', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-      },
+      },ㅎ
       colors: {
         primary: {
           50: '#eff6ff',
@@ -29,6 +29,7 @@ export default {
         'fade-in': 'fadeIn 0.6s ease-out',
         'slide-up': 'slideUp 0.6s ease-out',
         'float': 'float 3s ease-in-out infinite',
+        'spin-slow': 'spin 6s linear infinite',
       },
       keyframes: {
         fadeIn: {

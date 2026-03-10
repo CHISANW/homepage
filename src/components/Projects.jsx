@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FaGithub, FaStar, FaCodeBranch, FaExternalLinkAlt, FaGooglePlay, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { HiRefresh } from 'react-icons/hi'
+import { HiRefresh, HiCog } from 'react-icons/hi'
+import { SiSwagger } from 'react-icons/si'
 
 // 직접 개발/참여한 대표 프로젝트를 카드로 노출
 const FEATURED_PROJECTS = [
@@ -31,6 +32,18 @@ const FEATURED_PROJECTS = [
     badgeColor: '#7c3aed',
     gradient: 'linear-gradient(135deg, #7c3aed20, #38bdf820)',
     accent: '#818cf8',
+  },
+  {
+    title: 'CommitBody',
+    description: '운동 기록 및 소셜 커뮤니티 플랫폼의 백엔드 API 서버입니다. 인증, 피드, 운동 데이터 관리 등 핵심 기능을 담당합니다.',
+    tech: ['Spring Boot', 'Java', 'MySQL', 'Redis', 'Elasticsearch'],
+    imageFit: 'cover',
+    swagger: 'https://www.chisanw.com/api/commitbody/v1/swagger-ui/index.html',
+    github: 'https://github.com/Team9994/commitbody-back',
+    badge: 'API',
+    badgeColor: '#85EA2D',
+    gradient: 'linear-gradient(135deg, #85EA2D20, #4ade8020)',
+    accent: '#85EA2D',
   },
   {
     title: 'Healica Survey',
@@ -93,7 +106,17 @@ function FeaturedCard({ project }) {
           ? project.imageFit === 'cover'
             ? <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
             : <img src={project.image} alt={project.title} className="h-14 w-14 object-contain" />
-          : <FaGooglePlay className="w-10 h-10" style={{ color: project.accent }} />
+          : (
+            <div className="flex flex-col items-center justify-center gap-2">
+              <div className="relative flex items-center justify-center">
+                <HiCog className="w-8 h-8 animate-spin-slow" style={{ color: project.accent, animationDuration: '6s' }} />
+                <HiCog className="w-4 h-4 absolute -bottom-1 -right-2 animate-spin-slow" style={{ color: project.accent, opacity: 0.6, animationDuration: '4s', animationDirection: 'reverse' }} />
+              </div>
+              <div className="font-mono text-[9px]" style={{ color: project.accent, opacity: 0.7 }}>
+                페이지 준비중입니다.
+              </div>
+            </div>
+          )
         }
 
         <div
@@ -149,6 +172,17 @@ function FeaturedCard({ project }) {
               style={{ background: project.badgeColor, color: '#fff' }}
             >
               <FaExternalLinkAlt className="w-3 h-3" /> 바로가기
+            </a>
+          )}
+          {project.swagger && (
+            <a
+              href={project.swagger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg text-[11px] font-semibold transition-opacity hover:opacity-80"
+              style={{ background: '#1a2a1a', color: '#85EA2D', border: '1px solid #85EA2D40' }}
+            >
+              <SiSwagger className="w-3 h-3" /> Swagger
             </a>
           )}
           {project.github && (
